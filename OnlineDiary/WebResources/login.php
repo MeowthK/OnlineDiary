@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 $username = $_POST["username"];
 $password = $_POST["password"];
 
@@ -29,7 +31,11 @@ if (UsernameExists($username, $connection))
     $AccountCreationDate = $row["AccountCreationDate"];
 
     if (password_verify($password, $HashedPassword))
-        echo "Successful login.";
+    {
+        $_SESSION["current-user"] = $UserID;
+        $_SESSION["current-user-name"] = $UserName;
+        header("location: home.php");
+    }
     else
         header("location: index.php?errormsg=invalidcredentials");
 }

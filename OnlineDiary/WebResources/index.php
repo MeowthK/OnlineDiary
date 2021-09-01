@@ -1,3 +1,14 @@
+<?php
+	session_start();
+
+	if (isset($_SESSION["current-user"]))
+	{
+		header("location: home.php");
+		exit();
+	}
+?>
+
+<!DOCTYPE html>
 <html>
 	<head>
 		<title>Online Diary</title>
@@ -21,7 +32,8 @@
 						if (isset($_GET["errormsg"]))
 						{
 							$errList = [ "invalidcredentials" => "Invalid Credentials.",
-							             "usernamenotfound" => "Username not found. Check for typos and try again." ];
+							             "usernamenotfound" => "Username not found. Check for typos and try again.",
+										 "notloggedin" => "Please login first." ];
 
 							echo $errList[$_GET["errormsg"]];
 						}

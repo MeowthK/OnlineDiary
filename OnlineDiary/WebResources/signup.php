@@ -1,5 +1,13 @@
 <?php
 
+session_start();
+
+if (isset($_SESSION["current-user"]))
+{
+    header("location: home.php");
+    exit();
+}
+
 $name = $_POST["name"];
 $username = $_POST["username"];
 $password = $_POST["password"];
