@@ -1,32 +1,71 @@
 <html>
 	<head>
 		<title>Online Diary</title>
+		<link rel="stylesheet" href="css/stylesheet.css"/>
 	</head>
 	
 	<body>
-		<b>Welcome! Log-in to start writing.</b>
-		<p></p>
+		<section class="center">
+			<b>Welcome! Log-in to start writing.</b>
+			<p></p>
 
-		<form action="login.php" method="POST">
+			<form action="login.php" method="POST">
 
-			Username: <input type="text" name="username" required/><br>
-			Password: <input type="password" name="password" required/><br>
-			<button type="submit">Login</button>
+				<input type="text" name="username" placeholder="Username" required/><br>
+				<input type="password" name="password" placeholder="Password" required/><br>
+				
+				<div>
 
-		</form>
+					<?php
 
-		<hr>
-		<b>Or Sign Up</b>
-		<p>Set-up an account now to start recording your daily highlights!</p>
+						if (isset($_GET["errormsg"]))
+						{
+							$errList = [ "invalidcredentials" => "Invalid Credentials.",
+							             "usernamenotfound" => "Username not found. Check for typos and try again." ];
 
-		<form action="signup.php" method="POST">
-		
-			Your Name: <input type="text" name="name" required/><br>
-			Username: <input type="text" name="username" required/><br>
-			Password: <input type="password" name="password" required/><br>
-			<button type="submit">Sign Up</button>
+							echo $errList[$_GET["errormsg"]];
+						}
 
-		</form>
+					?>
+					
+				</div>
 
+				<br>
+				<button type="submit" name="submit">Login</button>
+
+			</form>
+
+			<hr>
+			<b>Or Sign Up</b>
+			<p>Set-up an account now to start recording your daily highlights!</p>
+
+			<form action="signup.php" method="POST">
+			
+				<input type="text" name="name" placeholder="Your Name" required/><br>
+				<input type="text" name="username" placeholder="Username" required/><br>
+				<input type="password" name="password" placeholder="Password" required/><br>
+				<input type="password" name="password2" placeholder="Repeat Password" required/><br>
+
+				<div>
+					
+					<?php
+
+						if (isset($_GET["signup-error"]))
+						{
+							$errList = [ "passwordmismatch" => "Passwords do not match.",
+						 				 "usernameexists" => "Username is already taken. Please try another." ];
+							
+							echo $errList[$_GET["signup-error"]];
+						}
+
+					?>
+
+				</div>
+				
+				<br>
+				<button type="submit" name="submit">Sign Up</button>
+
+			</form>
+		</section>
 	</body>
 </html>
