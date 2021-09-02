@@ -7,3 +7,19 @@
 .textarea-resize-lock {
     resize: none;
 }
+
+.hidden {
+    visibility: hidden;
+}
+
+.visible {
+    visibility: visible;
+}
+
+.hidden2 {
+    display: none;
+}
+
+.visible2 {
+    display:block;
+}

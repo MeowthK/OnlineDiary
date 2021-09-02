@@ -1,5 +1,7 @@
 <?php
     session_start();
+    
+    require_once "mysql-connection.php";
 ?>
 
 <!DOCTYPE html>
@@ -7,6 +9,7 @@
     <head>
         <title>Online Diary</title>
         <link rel="stylesheet" href="css/stylesheet.css"/>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     </head>
 
     <body>
@@ -37,7 +40,19 @@
             </form>
             
             <form action="diary-entry.php" method="POST">
-                <textarea class="textarea-resize-lock" name="diary-entry" rows="25" cols="100" placeholder="How was your day?" required><?php if (isset($_GET["lastentry"])){ echo $_GET["lastentry"]; } ?></textarea>
+                <textarea class="textarea-resize-lock" name="diary-entry" id="diary-entry" rows="25" cols="100" placeholder="How was your day?" required><?php
+                    
+                    $entry = GetDiaryEntry($_SESSION["current-user"], date("Y-m-d"), $connection);
+
+                    if (is_array($entry) && count($entry) >= 2)
+                    {
+                        $_SESSION["current-entry-id"] = $entry[0];
+                        echo $entry[1];
+                    }
+                    else
+                        $_SESSION["current-entry-id"] = null;
+
+                ?></textarea>
                 <br>
                 <div>
 
@@ -57,9 +72,18 @@
 
                 </div>
                 <br>
-                <input type="date" name="diary-date" value="<?php echo date("Y-m-d"); ?>"/>
-                <button type="submit" name="submit">Write to Diary</button>
+
+                <?php
+                    $dateInput = "<input type='date' name='diary-date' id='diary-date'";
+                    $currentDate = date("Y-m-d");
+                    $dateInput .= "value='$currentDate' max='$currentDate'/>";
+
+                    echo $dateInput;
+                ?>
+                <button type="submit" class="hidden2" name="delete" id="delete">Crumple</button>
+                <button type="submit" name="submit" id="submit">Write to Diary</button>
             </form>
         </section>
+        <script src="js/script.js"></script>
     </body>
 </html>
