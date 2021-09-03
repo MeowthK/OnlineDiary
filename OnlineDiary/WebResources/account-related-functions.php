@@ -19,6 +19,22 @@ function UsernameExists($username, $connection)
     return mysqli_num_rows($result) > 0;
 }
 
+function WriteDiaryEntryToHTML($userID, $dateWritten, $connection)
+{
+    $entry = GetDiaryEntry($userID, $dateWritten, $connection);
+    
+    if (is_array($entry) && count($entry) >= 2)
+    {
+        $_SESSION["current-entry-id"] = $entry[0];
+        echo $entry[1];
+    }
+    else
+    {
+        $_SESSION["current-entry-id"] = null;
+        echo '';
+    }
+}
+
 function GetDiaryEntry($userID, $date, $connection)
 {
     $query = "SELECT DiaryID, UserID FROM diaryentries WHERE DateWritten=?";

@@ -12,7 +12,7 @@ if (!isset($_SESSION["current-user"]))
 
 $userID = $_SESSION["current-user"];
 
-if (isset($_POST["delete"]) && $_SESSION["current-entry-id"] != null)
+if (isset($_POST["delete-final"]) && $_SESSION["current-entry-id"] != null)
 {
     DeleteDiaryEntry($_SESSION["current-entry-id"], $connection);
     exit();

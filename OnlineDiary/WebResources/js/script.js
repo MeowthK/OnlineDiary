@@ -7,6 +7,8 @@ $(document).ready(function(){
         let placeholder = "How was your day? :)";
         let entryReadOnly = false;
 
+        $("#delete-confirmation").hide();
+
         if (Date.parse(diaryDate) > Date.parse(currentDate))
             $("#diary-date").val(currentDate);
 
@@ -18,7 +20,7 @@ $(document).ready(function(){
             $("#submit").show();
         }
         else
-        {     
+        {
             placeholder = "You haven't written this day :(";
             entryReadOnly = true;
 
@@ -28,6 +30,25 @@ $(document).ready(function(){
 
         $("#diary-entry").prop("placeholder", placeholder);
         $("#diary-entry").prop("readonly", entryReadOnly);
+
+    });
+
+    $("#delete").click(function(){
+
+        if ($("#diary-entry").val().length > 0)
+            $("#delete-confirmation").show();
+
+    });
+
+    $("#cancel").click(function(){
+
+        $("#delete-confirmation").hide();
+
+    });
+
+    $("#delete-confirm").click(function(){
+        
+        $("#delete-final").click();
 
     });
 

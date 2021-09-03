@@ -40,17 +40,9 @@
             </form>
             
             <form action="diary-entry.php" method="POST">
-                <textarea class="textarea-resize-lock" name="diary-entry" id="diary-entry" rows="25" cols="100" placeholder="How was your day?" required><?php
-                    
-                    $entry = GetDiaryEntry($_SESSION["current-user"], date("Y-m-d"), $connection);
+                <textarea class="boxSizing" name="diary-entry" id="diary-entry" rows="20" cols="100" placeholder="How was your day?" required><?php
 
-                    if (is_array($entry) && count($entry) >= 2)
-                    {
-                        $_SESSION["current-entry-id"] = $entry[0];
-                        echo $entry[1];
-                    }
-                    else
-                        $_SESSION["current-entry-id"] = null;
+                    WriteDiaryEntryToHTML($_SESSION["current-user"], date("Y-m-d"), $connection);
 
                 ?></textarea>
                 <br>
@@ -74,15 +66,31 @@
                 <br>
 
                 <?php
+
                     $dateInput = "<input type='date' name='diary-date' id='diary-date'";
                     $currentDate = date("Y-m-d");
                     $dateInput .= "value='$currentDate' max='$currentDate'/>";
 
                     echo $dateInput;
+
                 ?>
-                <button type="submit" class="hidden2" name="delete" id="delete">Crumple</button>
+
                 <button type="submit" name="submit" id="submit">Write to Diary</button>
+                <button class="hidden2" type="submit" name="delete-final" id="delete-final"></button>
             </form>
+
+                <br>
+                <button class="hidden2" name="delete" id="delete">Crumple</button>
+                <br>
+
+                <div class="hidden2" name="delete-confirmation" id="delete-confirmation">
+
+                    <p>Are you sure you want to delete this entry?</p>
+                    <button name="delete-confirm" id="delete-confirm">Yes</button>
+                    <button name="cancel" id="cancel">No</button>
+
+                </div>
+
         </section>
         <script src="js/script.js"></script>
     </body>
